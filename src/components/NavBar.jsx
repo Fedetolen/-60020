@@ -1,6 +1,7 @@
 import './NavBar.css';
 import ButtonComponent from './ButtonComponent';
 import CartWidget from './CartWidget';
+import tienda2 from "/images/tienda2.jpg"
 
 export default function NavBar() {
   return (
@@ -8,7 +9,7 @@ export default function NavBar() {
       <nav className="navbar d-flex">
         <img
           style={{ width: 90 }}
-          src="/images/tienda2.jpg"
+          src={tienda2}
           alt="logo de Tienda Fullstack"
         />
         <div className="categorias">
