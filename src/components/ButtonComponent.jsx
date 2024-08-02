@@ -5,7 +5,7 @@ export default function ButtonComponent({ nombre, color }) {
   
     return (
       <>
-        <button type="button" className="btn text-light" style={misEstilos}>
+        <button type="button" className="btn  text-light" style={misEstilos}>
           {nombre}
         </button>
       </>
