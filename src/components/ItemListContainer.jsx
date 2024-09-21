@@ -1,19 +1,25 @@
-import { getProducts } from '../asyncMock.js';
 import { useEffect, useState } from 'react';
-import ProductsCard from './ProductsCard';
 import { useParams } from 'react-router-dom';
+import ProductsCard from './ProductsCard';
+import { getDocs, getFirestore, collection } from 'firebase/firestore';
 
 export default function ItemListContainer({ greeting }) {
   const [products, setProducts] = useState([]);
-  const { id } = useParams();
+  const { id } = useParams(); // id = categoría
 
   useEffect(() => {
-    getProducts.then((data) => {
+    const db = getFirestore();
+    const productsCollection = collection(db, "productos");
+
+    // Obtenemos todos los productos
+    getDocs(productsCollection).then((snapshot) => {
+      const productsData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+      // Filtramos por categoría si hay un `id` en la URL
       if (id) {
-        // Filtrar productos por categoría
-        setProducts(data.filter(product => product.category === id));
+        setProducts(productsData.filter((product) => product.category === id));
       } else {
-        setProducts(data);
+        setProducts(productsData);
       }
     });
   }, [id]);
@@ -21,7 +27,7 @@ export default function ItemListContainer({ greeting }) {
   return (
     <>
       <h2>{greeting || "Productos"}</h2>
-      <section style={{ display: 'flex', gap: 10 , flexWrap: "wrap"}}>
+      <section style={{ display: 'flex', gap: 10, flexWrap: "wrap" }}>
         {products.map((prod) => (
           <ProductsCard
             key={prod.id}
