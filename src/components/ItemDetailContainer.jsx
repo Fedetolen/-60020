@@ -6,7 +6,7 @@ import { ItemCount } from './ItemCount';
 const ItemDetailContainer = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true); // Para manejar el estado de carga
 
   useEffect(() => {
     const db = getFirestore();
