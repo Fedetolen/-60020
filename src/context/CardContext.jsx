@@ -1,15 +1,14 @@
 import { createContext, useState } from 'react';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
-// Creamos el contexto
 export const CartContext = createContext();
 
-// Creamos el provider del contexto
 export const CartProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
+  const [orderId, setOrderId] = useState("");
 
-  // Puedes agregar aquí las funciones que gestionan el carrito
   const agregarProducto = (producto, cantidad) => {
-    // lógica para agregar el producto al carrito
+   
   };
 
   const vaciarCarrito = () => {
@@ -17,11 +16,24 @@ export const CartProvider = ({ children }) => {
   };
 
   const cantidadEnCarrito = () => {
-    return carrito.reduce((acc, prod) => acc + prod.cantidad,0)
-}
+    return carrito.reduce((acc, prod) => acc + prod.cantidad, 0);
+  };
+
+  const precioTotal = () => {
+    return carrito.reduce((acc, prod) => acc + prod.price * prod.cantidad, 0);
+  };
+
+  const createNewOrder = (order) => {
+    const db = getFirestore();
+    const orders = collection(db, "orders");
+
+    addDoc(orders, order).then((snapshot) => {
+      setOrderId(snapshot.id);
+    });
+  };
 
   return (
-    <CartContext.Provider value={{ carrito, setCarrito, agregarProducto, vaciarCarrito, cantidadEnCarrito }}>
+    <CartContext.Provider value={{ carrito, setCarrito, agregarProducto, vaciarCarrito, cantidadEnCarrito, precioTotal, createNewOrder }}>
       {children}
     </CartContext.Provider>
   );

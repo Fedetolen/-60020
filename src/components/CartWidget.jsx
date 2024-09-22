@@ -9,7 +9,7 @@ export default function CartWidget() {
       <><div className="carrito">
         <Link to="/carrito">
         <img style={{ width: 50 }} src={carrito} alt="carro" />
-        <span className="p-2 text-warning">{cantidadEnCarrito}</span>
+        <span className="p-2 text-warning">{cantidadEnCarrito()}</span>
          </Link>
         </div>
       </>
