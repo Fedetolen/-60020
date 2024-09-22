@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-export const UserInfo = () => {
+export const UserInfo = ({carrito,createNewOrder}) => {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [email, setEmail] = useState("");
   const [telefono, setTelefono] = useState("");
 
-    const handleSubmit = ({carrito,createNewOrder}) => {
+    const handleSubmit = () => {
         const order = {
             buyer: {
                 nombre,

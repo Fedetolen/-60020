@@ -3,7 +3,7 @@ import { CartContext } from '../context/CardContext'
 import { UserInfo } from './UserInfo'
 
 export const CartView = () => {
-    const { carrito, precioTotal , vaciarCarrito} = useContext(CartContext)
+    const { carrito, precioTotal , vaciarCarrito, createNewOrder} = useContext(CartContext)
 
     const handleVaciar = () => {
         vaciarCarrito()
@@ -21,7 +21,7 @@ export const CartView = () => {
             ))}
            {carrito.length > 0 && <h2 >Precio Total: ${precioTotal()} </h2>}
             <button onClick={handleVaciar}>Vaciar Carrito</button>
-            <UserInfo/>
+            <UserInfo carrito={carrito} createNewOrder={createNewOrder}/>
         </div>
     )
 }
