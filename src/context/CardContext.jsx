@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, doc, updateDoc } from 'firebase/firestore';
 
 export const CartContext = createContext();
 
@@ -29,6 +29,11 @@ export const CartProvider = ({ children }) => {
 
     addDoc(orders, order).then((snapshot) => {
       setOrderId(snapshot.id);
+
+      const getDoc = doc(db,"orders",snapshot.id)
+      updateDoc(getDoc,{orderId:snapshot.id})
+
+      alert("Tu orden de compra es: " + snapshot.id)
     });
   };
 
